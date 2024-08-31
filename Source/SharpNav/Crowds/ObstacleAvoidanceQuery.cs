@@ -7,13 +7,7 @@ using System.Collections.Generic;
 using SharpNav.Collections.Generic;
 using SharpNav.Geometry;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.Crowds
 {
@@ -120,7 +114,7 @@ namespace SharpNav.Crowds
 
 				Vector3 orig = new Vector3(0, 0, 0);
 				circles[i].Dp = pb - pa;
-				circles[i].Dp.Normalize();
+				circles[i].Dp = Vector3.Normalize(circles[i].Dp);
 				Vector3 dv = circles[i].DesiredVel - desiredVel;
 
 				float a = Triangle3.Area2D(orig, circles[i].Dp, dv);

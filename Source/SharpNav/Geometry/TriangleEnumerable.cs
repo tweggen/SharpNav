@@ -4,13 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.Geometry
 {
@@ -43,7 +37,7 @@ namespace SharpNav.Geometry
 		/// <param name="vertStride">The distance between the start of two triangles. A value of 0 means the data is tightly packed.</param>
 		/// <param name="triCount">The number of triangles to enumerate.</param>
 		/// <returns>An enumerable collection of triangles.</returns>
-		public static IEnumerable<Triangle3> FromVector3(Vector3[] vertices, int vertOffset, int vertStride, int triCount)
+		public static IEnumerable<Triangle3> FromVector3(System.Numerics.Vector3[] vertices, int vertOffset, int vertStride, int triCount)
 		{
 			Triangle3 tri;
 
@@ -107,7 +101,7 @@ namespace SharpNav.Geometry
 		/// <param name="indexOffset">The index of the first index to be enumerated.</param>
 		/// <param name="triCount">The number of triangles to enumerate.</param>
 		/// <returns>An enumerable collection of triangles.</returns>
-		public static IEnumerable<Triangle3> FromIndexedVector3(Vector3[] vertices, int[] indices, int vertOffset, int vertStride, int indexOffset, int triCount)
+		public static IEnumerable<Triangle3> FromIndexedVector3(System.Numerics.Vector3[] vertices, int[] indices, int vertOffset, int vertStride, int indexOffset, int triCount)
 		{
 			Triangle3 tri;
 
@@ -180,7 +174,7 @@ namespace SharpNav.Geometry
 		public static BBox3 GetBoundingBox(this IEnumerable<Triangle3> tris, float padding)
 		{
 			BBox3 bounds = new BBox3();
-			Vector3 va, vb, vc;
+			System.Numerics.Vector3 va, vb, vc;
 			foreach (Triangle3 tri in tris)
 			{
 				va = tri.A;

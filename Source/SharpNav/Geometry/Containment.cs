@@ -1,13 +1,7 @@
 ﻿// Copyright (c) 2014-2015 Robert Rouhani <robert.rouhani@gmail.com> and other contributors (see CONTRIBUTORS file).
 // Licensed under the MIT License - https://raw.github.com/Robmaister/SharpNav/master/LICENSE
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.Geometry
 {

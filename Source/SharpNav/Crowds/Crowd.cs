@@ -8,13 +8,7 @@ using SharpNav.Collections.Generic;
 using SharpNav.Geometry;
 using SharpNav.Pathfinding;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.Crowds
 {
@@ -575,14 +569,14 @@ namespace SharpNav.Crowds
 					{
 						float u = MathHelper.Normalize(agentAnims[i].T, 0.0f, ta);
 						Vector3 lerpOut;
-						Vector3.Lerp(ref agentAnims[i].InitPos, ref agentAnims[i].StartPos, u, out lerpOut);
+						lerpOut = Vector3.Lerp(agentAnims[i].InitPos, agentAnims[i].StartPos, u);
 						agents[i].Position = lerpOut;
 					}
 					else
 					{
 						float u = MathHelper.Normalize(agentAnims[i].T, ta, tb);
 						Vector3 lerpOut;
-						Vector3.Lerp(ref agentAnims[i].StartPos, ref agentAnims[i].EndPos, u, out lerpOut);
+						lerpOut = Vector3.Lerp(agentAnims[i].StartPos, agentAnims[i].EndPos, u);
 						agents[i].Position = lerpOut;
 					}
 
@@ -991,7 +985,7 @@ namespace SharpNav.Crowds
 			dir.Y = 0;
 			dir.Z = dir0.Z - dir1.Z * len0 * 0.5f;
 
-			dir.Normalize();
+			dir = Vector3.Normalize(dir);
 		}
 
 		/// <summary>
@@ -1009,7 +1003,7 @@ namespace SharpNav.Crowds
 
 			dir = ag.Corners[0].Point.Position - ag.Position;
 			dir.Y = 0;
-			dir.Normalize();
+			dir = Vector3.Normalize(dir);
 		}
 
 		/// <summary>

@@ -4,13 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.Geometry
 {
@@ -26,17 +20,17 @@ namespace SharpNav.Geometry
 		/// <summary>
 		/// The first point.
 		/// </summary>
-		public Vector3 A;
+		public System.Numerics.Vector3 A;
 
 		/// <summary>
 		/// The second point.
 		/// </summary>
-		public Vector3 B;
+		public System.Numerics.Vector3 B;
 
 		/// <summary>
 		/// The third point.
 		/// </summary>
-		public Vector3 C;
+		public System.Numerics.Vector3 C;
 
 		#endregion
 
@@ -62,78 +56,66 @@ namespace SharpNav.Geometry
 		/// <summary>
 		/// Gets the directed line segment from <see cref="A"/> to <see cref="B"/>.
 		/// </summary>
-		public Vector3 AB
+		public System.Numerics.Vector3 AB
 		{
 			get
 			{
-				Vector3 result;
-				Vector3.Subtract(ref B, ref A, out result);
-				return result;
+				return B - A;
 			}
 		}
 
 		/// <summary>
 		/// Gets the directed line segment from <see cref="A"/> to <see cref="C"/>.
 		/// </summary>
-		public Vector3 AC
+		public System.Numerics.Vector3 AC
 		{
 			get
 			{
-				Vector3 result;
-				Vector3.Subtract(ref C, ref A, out result);
-				return result;
+				return C - A;
 			}
 		}
 
 		/// <summary>
 		/// Gets the directed line segment from <see cref="B"/> to <see cref="A"/>.
 		/// </summary>
-		public Vector3 BA
+		public System.Numerics.Vector3 BA
 		{
 			get
 			{
-				Vector3 result;
-				Vector3.Subtract(ref A, ref B, out result);
-				return result;
+				return A - B;
 			}
 		}
 
 		/// <summary>
 		/// Gets the directed line segment from <see cref="B"/> to <see cref="C"/>.
 		/// </summary>
-		public Vector3 BC
+		public System.Numerics.Vector3 BC
 		{
 			get
 			{
-				Vector3 result;
-				Vector3.Subtract(ref C, ref B, out result);
-				return result;
+				return C - B;
 			}
 		}
 
 		/// <summary>
 		/// Gets the directed line segment from <see cref="C"/> to <see cref="A"/>.
 		/// </summary>
-		public Vector3 CA
+		public System.Numerics.Vector3 CA
 		{
 			get
 			{
-				Vector3 result;
-				Vector3.Subtract(ref A, ref C, out result);
-				return result;
+				return A - C;
 			}
 		}
 
 		/// <summary>
 		/// Gets the directed line segment from <see cref="C"/> to <see cref="B"/>.
 		/// </summary>
-		public Vector3 CB
+		public System.Numerics.Vector3 CB
 		{
 			get
 			{
-				Vector3 result;
-				Vector3.Subtract(ref B, ref C, out result);
-				return result;
+				return B - C;
 			}
 		}
 

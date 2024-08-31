@@ -7,16 +7,8 @@ using System.Collections.Generic;
 using SharpNav.Collections;
 using SharpNav.Geometry;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-using Vector2 = OpenTK.Vector2;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-using Vector2 = SharpDX.Vector2;
-#endif
+using Vector3 = System.Numerics.Vector3;
+using Vector2 = System.Numerics.Vector2;
 
 namespace SharpNav.Pathfinding
 {

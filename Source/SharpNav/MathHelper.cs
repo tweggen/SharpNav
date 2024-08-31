@@ -5,13 +5,7 @@ using System;
 
 using SharpNav.Geometry;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav
 {
@@ -254,9 +248,9 @@ namespace SharpNav
 				{
 					float s = distances[j] / (distances[j] - distances[i]);
 
-					Vector3.Subtract(ref inVertices[i], ref inVertices[j], out temp);
-					Vector3.Multiply(ref temp, s, out temp);
-					Vector3.Add(ref inVertices[j], ref temp, out outVertices[m]);
+					temp = inVertices[i] - inVertices[j];
+					temp = temp * s;
+					outVertices[m] = inVertices[j] + temp;
 					m++;
 				}
 

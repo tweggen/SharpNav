@@ -4,13 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.Geometry
 {
@@ -64,13 +58,7 @@ namespace SharpNav.Geometry
 		/// <param name="result">The component-wise minimum of the two vectors.</param>
 		internal static void ComponentMin(ref Vector3 left, ref Vector3 right, out Vector3 result)
 		{
-#if OPENTK || STANDALONE
-			Vector3.ComponentMin(ref left, ref right, out result);
-#elif UNITY3D
-			result = Vector3.Min(left, right);
-#else
-			Vector3.Min(ref left, ref right, out result);
-#endif
+			result = new(Single.Min(left.X, right.X), Single.Min(left.Y, right.Y), Single.Min(left.Z, right.Z));
 		}
 
 		/// <summary>
@@ -81,13 +69,7 @@ namespace SharpNav.Geometry
 		/// <param name="result">The component-wise maximum of the two vectors.</param>
 		internal static void ComponentMax(ref Vector3 left, ref Vector3 right, out Vector3 result)
 		{
-#if OPENTK || STANDALONE
-			Vector3.ComponentMax(ref left, ref right, out result);
-#elif UNITY3D
-			result = Vector3.Min(left, right);
-#else
-			Vector3.Max(ref left, ref right, out result);
-#endif
+			result = new(Single.Max(left.X, right.X), Single.Max(left.Y, right.Y), Single.Max(left.Z, right.Z));
 		}
 
 		/// <summary>
@@ -184,7 +166,7 @@ namespace SharpNav.Geometry
 		{
 			Vector3 up = Vector3.UnitY;
 			float dot;
-			Vector3.Dot(ref vec, ref up, out dot);
+			dot = Vector3.Dot(vec, up);
 			angle = (float)Math.Acos(dot);
 		}
 

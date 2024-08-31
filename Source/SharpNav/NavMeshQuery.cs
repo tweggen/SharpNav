@@ -8,13 +8,7 @@ using SharpNav.Collections.Generic;
 using SharpNav.Geometry;
 using SharpNav.Pathfinding;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav
 {
@@ -1564,7 +1558,7 @@ namespace SharpNav
 					float dx = vb.X - va.X;
 					float dz = vb.Z - va.Z;
 					hit.Normal = new Vector3(dz, 0, dx);
-					hit.Normal.Normalize();
+					hit.Normal = Vector3.Normalize(hit.Normal);
 					return true;
 				}
 
@@ -1835,8 +1829,8 @@ namespace SharpNav
 						float tmax = ints[k].TMax / 255.0f;
 						if (n < maxSegments)
 						{
-							Vector3.Lerp(ref vj2, ref vi2, tmin, out segmentVerts[n].Start);
-							Vector3.Lerp(ref vj2, ref vi2, tmax, out segmentVerts[n].End);
+							segmentVerts[n].Start = Vector3.Lerp(vj2, vi2, tmin);
+							segmentVerts[n].End = Vector3.Lerp(vj2, vi2, tmax);
 							segmentRefs[n] = ints[k].Reference;
 							n++;
 						}
@@ -1851,8 +1845,8 @@ namespace SharpNav
 						float tmax = imax / 255.0f;
 						if (n < maxSegments)
 						{
-							Vector3.Lerp(ref vj2, ref vi2, tmin, out segmentVerts[n].Start);
-							Vector3.Lerp(ref vj2, ref vi2, tmax, out segmentVerts[n].End);
+							segmentVerts[n].Start = Vector3.Lerp(vj2, vi2, tmin);
+							segmentVerts[n].End = Vector3.Lerp(vj2, vi2, tmax);
 							segmentRefs[n] = NavPolyId.Null;
 							n++; 
 						}

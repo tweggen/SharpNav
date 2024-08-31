@@ -6,13 +6,7 @@ using System.Collections.Generic;
 
 using SharpNav.Geometry;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav
 {
@@ -666,7 +660,7 @@ namespace SharpNav
 
 					//create samples along the edge
 					Vector3 dv;
-					Vector3.Subtract(ref vi, ref vj, out dv);
+					dv = vi - vj;
 					float d = (float)Math.Sqrt(dv.X * dv.X + dv.Z * dv.Z);
 					int nn = 1 + (int)Math.Floor(d / sampleDist);
 
@@ -682,8 +676,8 @@ namespace SharpNav
 						Vector3 pos;
 
 						Vector3 tmp;
-						Vector3.Multiply(ref dv, u, out tmp);
-						Vector3.Add(ref vj, ref tmp, out pos);
+						tmp = dv * u;
+						pos = vj + tmp;
 
 						pos.Y = GetHeight(pos, ics, compactField.CellHeight, hp) * compactField.CellHeight;
 

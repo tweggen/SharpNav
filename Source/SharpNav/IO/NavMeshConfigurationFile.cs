@@ -7,13 +7,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 using SharpNav.Geometry;
 
-#if MONOGAME
-using Vector3 = Microsoft.Xna.Framework.Vector3;
-#elif OPENTK
-using Vector3 = OpenTK.Vector3;
-#elif SHARPDX
-using Vector3 = SharpDX.Vector3;
-#endif
+using Vector3 = System.Numerics.Vector3;
 
 namespace SharpNav.IO
 {
@@ -31,7 +25,9 @@ namespace SharpNav.IO
 
 		public NavMeshConfigurationFile(StreamReader input)
 		{
-			var deserializer = new Deserializer(namingConvention: new HyphenatedNamingConvention());
+			var deserializer = new DeserializerBuilder()
+				.WithNamingConvention(HyphenatedNamingConvention.Instance)
+				.Build();
 			var data = deserializer.Deserialize<YamlData>(input);
 
 			GenerationSettings = data.Config;
@@ -46,7 +42,9 @@ namespace SharpNav.IO
 			data.Export = ExportPath;
 			data.Meshes = InputMeshes;
 
-			var serializer = new Serializer(SerializationOptions.None, new HyphenatedNamingConvention());
+			var serializer = new SerializerBuilder()
+				.WithNamingConvention(HyphenatedNamingConvention.Instance)
+				.Build();
 			using (StreamWriter writer = new StreamWriter(path))
 				serializer.Serialize(writer, data);
 		}
