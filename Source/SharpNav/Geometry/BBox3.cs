@@ -28,6 +28,13 @@ namespace SharpNav.Geometry
 		/// </summary>
 		public Vector3 Max;
 
+		public BBox3()
+		{
+			Min = new(Single.MaxValue, Single.MaxValue, Single.MaxValue);
+			Max = new(Single.MinValue, Single.MinValue, Single.MinValue);
+		}
+		
+		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BBox3"/> struct.
 		/// </summary>

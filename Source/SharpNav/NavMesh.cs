@@ -32,26 +32,38 @@ namespace SharpNav
 		/// <returns>A <see cref="NavMesh"/>.</returns>
 		public static NavMesh Generate(IEnumerable<Triangle3> triangles, NavMeshGenerationSettings settings)
 		{
+			Console.WriteLine($"{DateTime.UtcNow}: GetBoundingBox()");
 			BBox3 bounds = triangles.GetBoundingBox(settings.CellSize);
 			var hf = new Heightfield(bounds, settings);
 			hf.RasterizeTriangles(triangles);
+			Console.WriteLine($"{DateTime.UtcNow}: RasterizeTriangles()");
 			hf.FilterLedgeSpans(settings.VoxelAgentHeight, settings.VoxelMaxClimb);
+			Console.WriteLine($"{DateTime.UtcNow}: FilterLedgeSpans()");
 			hf.FilterLowHangingWalkableObstacles(settings.VoxelMaxClimb);
+			Console.WriteLine($"{DateTime.UtcNow}: FilterLowHanging()");
 			hf.FilterWalkableLowHeightSpans(settings.VoxelAgentHeight);
 
 			var chf = new CompactHeightfield(hf, settings);
+			Console.WriteLine($"{DateTime.UtcNow}: Erode()");
 			chf.Erode(settings.VoxelAgentRadius);
+			Console.WriteLine($"{DateTime.UtcNow}: BuildDistanceField()");
 			chf.BuildDistanceField();
+			Console.WriteLine($"{DateTime.UtcNow}: BuildRegions()");
 			chf.BuildRegions(2, settings.MinRegionSize, settings.MergedRegionSize);
 
+			Console.WriteLine($"{DateTime.UtcNow}: BuildContourSet()");
 			var cont = chf.BuildContourSet(settings);
 
+			Console.WriteLine($"{DateTime.UtcNow}: PolyMesh()");
 			var polyMesh = new PolyMesh(cont, settings);
 
+			Console.WriteLine($"{DateTime.UtcNow}: PolyMeshDetail()");
 			var polyMeshDetail = new PolyMeshDetail(polyMesh, chf, settings);
 
+			Console.WriteLine($"{DateTime.UtcNow}: NavMeshBuilder()");
 			var buildData = new NavMeshBuilder(polyMesh, polyMeshDetail, new Pathfinding.OffMeshConnection[0], settings);
 
+			Console.WriteLine($"{DateTime.UtcNow}: NavMesh()");
 			var navMesh = new NavMesh(buildData);
 			return navMesh;
 		}

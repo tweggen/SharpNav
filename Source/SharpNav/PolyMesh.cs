@@ -132,10 +132,21 @@ namespace SharpNav
 						|| ti.Index1 == ti.Index2)
 						continue;
 
+					{
+						int maxIndex = indices.Length;
+						if (ti.Index0 >= maxIndex || ti.Index1 >= maxIndex || ti.Index2 >= maxIndex)
+						{
+							int a = 1;
+						}
+					}
 					//each polygon has numVertsPerPoly
 					//index 0, 1, 2 store triangle vertices
 					//other polygon indexes (3 to numVertsPerPoly - 1) should be used for storing extra vertices when two polygons merge together
 					Polygon p = new Polygon(numVertsPerPoly, Area.Null, RegionId.Null);
+					if (p.Vertices.Length < 3)
+					{
+						int a = 1;
+					}
 					p.Vertices[0] = RemoveDiagonalFlag(indices[ti.Index0]);
 					p.Vertices[1] = RemoveDiagonalFlag(indices[ti.Index1]);
 					p.Vertices[2] = RemoveDiagonalFlag(indices[ti.Index2]);
